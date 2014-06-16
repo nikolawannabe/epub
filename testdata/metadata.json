@@ -1,0 +1,12 @@
+{
+    "language": "en",
+    "title": "A Book of Win",
+    "creator": {
+        "name": "First Last",
+        "role": "aut"
+    },
+    "publisher": "I am a publisher",
+    "date": "03/05/2014",
+    "datecopyrighted": "03/05/2014",
+    "isbn13": "1234567890123"
+}
