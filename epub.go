@@ -4,10 +4,10 @@ import (
 	"archive/zip"
 	"bytes"
 	"encoding/json"
-	"text/template"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
+	"text/template"
 )
 
 const (
@@ -38,7 +38,7 @@ func (w *EpubArchive) getMetadata(filePath string) (Metadata, error) {
 }
 
 type MetaInfFile struct {
-	Name string
+	Name    string
 	Content []byte
 }
 
