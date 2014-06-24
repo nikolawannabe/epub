@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"path/filepath"
 	"log"
 	"text/template"
 )
@@ -71,8 +72,12 @@ func (w *EpubArchive) Build(title string, opf Opf, chapters []Chapter) ([]byte, 
 	buf := new(bytes.Buffer)
 	w.Writer = *zip.NewWriter(buf)
 
-	// The mimetype must always be first in the archive.
-	f, err := w.Writer.Create(mimeTypeFileName)
+	// The mimetype must always be first in the file, and must not be compressed.
+	header := &zip.FileHeader{
+		Name:   mimeTypeFileName,
+		Method: zip.Store,
+	}
+	f, err := w.CreateHeader(header)
 	if err != nil {
 		log.Printf("%v", err)
 		return nil, err
@@ -104,6 +109,7 @@ func (w *EpubArchive) addMetaInfFileToArchive(files []MetaInfFile) error {
 		f, err := w.Writer.Create(file.Name)
 		if err != nil {
 			log.Printf("%v", err)
+			return err
 		}
 		_, err = f.Write(file.Content)
 		if err != nil {
@@ -117,9 +123,10 @@ func (w *EpubArchive) addMetaInfFileToArchive(files []MetaInfFile) error {
 // addChaptersToArchive appends the content for each chapter with the specified filename to the zip.
 func (w *EpubArchive) addChaptersToArchive(chapters []Chapter) error {
 	for _, chapter := range chapters {
-		f, err := w.Writer.Create(chapter.FileName)
+		f, err := w.Writer.Create(filepath.Join("OEBPS", chapter.FileName))
 		if err != nil {
 			log.Printf("%v", err)
+			return err
 		}
 		_, err = f.Write([]byte(chapter.Contents))
 		if err != nil {

@@ -1,6 +1,9 @@
 package epub
 
-type Identifier string
+type Identifier struct {
+	Value	string
+	IdentifierType	string
+}
 
 type Creator struct {
 	Name string `json:"name"`
@@ -31,7 +34,7 @@ type Manifest struct {
 type OpfRootFile struct {
 	FullPath   string
 	MediaType  string
-	Identifier Identifier
+	Identifiers []Identifier
 	Metadata   Metadata
 	Manifest   Manifest
 }
