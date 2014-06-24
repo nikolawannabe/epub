@@ -12,7 +12,7 @@
         {{ end }}
         <dc:language>{{ .Metadata.Language }} </dc:language>
         <dc:title>{{ .Metadata.Title }}</dc:title>
-        {{ if .Metadata.Creator }}
+        {{ if .Metadata.Creator.Name }}
         <dc:creator id="creator">{{ .Metadata.Creator.Name }}</dc:creator>
         <meta refines="#creator"
               property="role"
