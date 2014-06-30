@@ -24,7 +24,8 @@ type ManifestItem struct {
 	Id         string
 	Href       string
 	MediaType  string
-	Properties []string // http://www.idpf.org/epub/30/spec/epub30-publications.html#sec-item-property-values
+	Properties []string // http://www.idpf.org/epub/30/spec/epub30-publications.html#sec-item-property-value
+        Title *string
 }
 
 type Manifest struct {

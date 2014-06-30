@@ -65,6 +65,7 @@ func (w *EpubArchive) buildMetaInfFiles(title string, opf Opf) []MetaInfFile {
 	opfXml := MetaInfFile{Name: fmt.Sprintf("OEBPS/%s.opf", title),
 		Content: buf.Bytes()}
 	metaInfFiles = append(metaInfFiles, opfXml)
+
 	return metaInfFiles
 }
 
@@ -88,9 +89,21 @@ func (w *EpubArchive) Build(title string, opf Opf, chapters []Chapter) ([]byte, 
 		return nil, err
 	}
 
+	tocManifest := ManifestItem{
+		Id: "tocref",
+		Href:       "chapters/toc.xhtml",
+		MediaType: "application/xhtml+xml",
+		Properties: []string{"nav"},
+	}
+
+	opf.RootFiles[0].Manifest.ManifestItems = append(opf.RootFiles[0].Manifest.ManifestItems,
+		tocManifest)
+
 	metaFiles := w.buildMetaInfFiles(title, opf)
 	w.addMetaInfFileToArchive(metaFiles)
 	w.addChaptersToArchive(chapters)
+
+	w.addChaptersToArchive([]Chapter{w.buildToc(opf)})
 
 	err = w.Writer.Close()
 	if err != nil {
@@ -100,6 +113,18 @@ func (w *EpubArchive) Build(title string, opf Opf, chapters []Chapter) ([]byte, 
 
 	return buf.Bytes(), nil
 
+}
+
+func (w *EpubArchive) buildToc(opf Opf) Chapter {
+	tmpl := template.Must(template.ParseGlob(templateGlob))
+	buf := new(bytes.Buffer)
+	err := tmpl.ExecuteTemplate(buf, "toc.xhtml.tpl", opf.RootFiles[0].Manifest)
+	if err != nil {
+		log.Fatalf("template execution: %s", err)
+	}
+	toc := Chapter{FileName: "chapters/toc.xhtml",
+		Contents: string(buf.Bytes())}
+	return toc
 }
 
 //TODO: chapter and meta-inf file can likely be combined into one info that takes bytes.

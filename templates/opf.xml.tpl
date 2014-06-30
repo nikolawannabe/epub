@@ -18,9 +18,6 @@
               property="role"
               scheme="marc:relators">{{ .Metadata.Creator.Role }}</meta>
         {{ end }}
-        {{ if .Metadata.Date }}
-        <meta property="dcterms:modified">{{ .Metadata.Date}}</meta>
-        {{ end }}
         {{ if .Metadata.Publisher }}
         <dc:publisher>{{ .Metadata.Publisher}}</dc:publisher>
         {{ end }}
@@ -31,6 +28,9 @@
     <manifest>
         {{ range $manifestItem :=  .Manifest.ManifestItems }}
         <item id="{{ $manifestItem.Id}}"
+              {{ if $manifestItem.Properties }}
+        properties="{{ range $property := $manifestItem.Properties}}{{$property}} {{ end }}"
+            {{ end }}
               href="{{ $manifestItem.Href }}"
               media-type="{{ $manifestItem.MediaType}}"/>
         {{ end }}
