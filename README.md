@@ -1,5 +1,5 @@
-This is a totally naive implementation of an epub creation library.
+This is an epub creation library written in Go.
 
-It is wholly incomplete and very buggy, and you should not use it.
+The idea is that you fill up some metadata objects, give some files for the book chapters, and the library will create a passable ePub file.
 
-I repeat: Do not use this unless you like to send pull requests.
+[feedepub)(https://github.com/nikolawannabe/feedepub) is a sample client that takes an rss feed and turns it into a mostly-passable epub.
