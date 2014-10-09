@@ -1,3 +1,5 @@
+// Package epub provides a mechanism for generating a (nominally) valid ePub 3 file from a list
+// of metadata and content.
 package epub
 
 import (
@@ -6,17 +8,22 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"path/filepath"
 	"log"
+	"path/filepath"
 	"text/template"
 )
 
 const (
 	mimeTypeFileName = "mimetype"
+	// mimetype is the required mime type of an epub file
 	mimetype         = "application/epub+zip"
+
+	// TODO: these files should be distributed as part of the binary, probably.
+	// templateGlob is the location of the epub xml templates on your file system.
 	templateGlob     = "/home/ctalbot/src/lugod/src/github.com/nikolawannabe/epub/templates/*.tpl"
 )
 
+// EpubArchive contains the necessary structs to generate an epub
 type EpubArchive struct {
 	zip.Writer
 	Opf Opf
@@ -38,6 +45,8 @@ func (w *EpubArchive) getMetadata(filePath string) (Metadata, error) {
 	return metadata, nil
 }
 
+// MetaInfFile contains information about the meta inf files which must be included for an epub
+// to be valid.
 type MetaInfFile struct {
 	Name    string
 	Content []byte
@@ -69,6 +78,7 @@ func (w *EpubArchive) buildMetaInfFiles(title string, opf Opf) []MetaInfFile {
 	return metaInfFiles
 }
 
+// Build generates an epub file if possible from the title, opf, and chapters
 func (w *EpubArchive) Build(title string, opf Opf, chapters []Chapter) ([]byte, error) {
 	buf := new(bytes.Buffer)
 	w.Writer = *zip.NewWriter(buf)
@@ -90,9 +100,9 @@ func (w *EpubArchive) Build(title string, opf Opf, chapters []Chapter) ([]byte, 
 	}
 
 	tocManifest := ManifestItem{
-		Id: "tocref",
+		Id:         "tocref",
 		Href:       "chapters/toc.xhtml",
-		MediaType: "application/xhtml+xml",
+		MediaType:  "application/xhtml+xml",
 		Properties: []string{"nav"},
 	}
 
@@ -115,6 +125,7 @@ func (w *EpubArchive) Build(title string, opf Opf, chapters []Chapter) ([]byte, 
 
 }
 
+// buildToc generates the table of contents for the epub file.
 func (w *EpubArchive) buildToc(opf Opf) Chapter {
 	tmpl := template.Must(template.ParseGlob(templateGlob))
 	buf := new(bytes.Buffer)

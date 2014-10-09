@@ -23,17 +23,17 @@ const (
 	// Digital Object Identifier (variable length and character set).
 	DOI = "06"
 	// Library of Congress Control Number (12 characters, alphanumeric).
-	LCCN	= "13"
+	LCCN = "13"
 	// GS1 Global Trade Item Number (14 digits).
-	GTIN_14	= "14"
+	GTIN_14 = "14"
 	// International Standard Book Number, from 2007, unhyphenated (13 digits starting 978 or
 	// 9791–9799).
-	ISBN_13	= "15"
+	ISBN_13 = "15"
 	// The number assigned to a publication as part of a national legal deposit process.
-	Legal_deposit_number	= "17"
+	Legal_deposit_number = "17"
 	// Uniform Resource Name: note that in trade applications an ISBN must be sent as a GTIN-13
 	// and, where required, as an ISBN-13 – it should not be sent as a URN.
-	URN	= "22"
+	URN = "22"
 	// A unique number assigned to a bibliographic item by OCLC.
 	OCLC_number = "23"
 	// An ISBN-13 assigned by a co-publisher. The ‘main’ ISBN sent with ID type code 03
@@ -41,15 +41,15 @@ const (
 	// identified in Supply Detail. However, ISBN rules allow a co-published title to carry
 	// more than one ISBN. The co-publisher should be identified in an instance of the
 	// <Publisher> composite, with the applicable <PublishingRole> code.
-	Co_publishers_ISBN_13	= "24"
+	Co_publishers_ISBN_13 = "24"
 	// International Standard Music Number, from 2008 (13-digit number starting 9790).
-	ISMN_13	= "25"
+	ISMN_13 = "25"
 	// Actionable ISBN, in fact a special DOI incorporating the ISBN-13 within the DOI syntax
 	//  Begins ‘10.978.’ or ‘10.979.’ and includes a / character between the registrant
 	// element (publisher prefix) and publication element of the ISBN,
 	// eg 10.978.000/1234567. Note the ISBN-A should always be accompanied by the ISBN
 	// itself, using codes 03 and/or 15.
-	ISBN_A	= "26"
+	ISBN_A = "26"
 	// E-publication identifier controlled by JPOIID’s Committee for Research and Management
 	// of Electronic Publishing Codes.
 	JP_e_code = "27"

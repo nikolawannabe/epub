@@ -5,10 +5,12 @@ import (
 	"testing"
 )
 
+// This test shows that there is a bug!
 func TestFillTemplate(t *testing.T) {
 	var epub EpubArchive
 	var opf Opf
-	epub.fillTemplates(opf)
+	var chapters []Chapter
+	epub.Build("hello", opf, chapters)
 	assert.True(t, false)
 }
 

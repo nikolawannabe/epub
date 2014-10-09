@@ -1,8 +1,8 @@
 package epub
 
 type Identifier struct {
-	Value	string
-	IdentifierType	string
+	Value          string
+	IdentifierType string
 }
 
 type Creator struct {
@@ -25,7 +25,7 @@ type ManifestItem struct {
 	Href       string
 	MediaType  string
 	Properties []string // http://www.idpf.org/epub/30/spec/epub30-publications.html#sec-item-property-value
-        Title *string
+	Title      *string
 }
 
 type Manifest struct {
@@ -33,11 +33,11 @@ type Manifest struct {
 }
 
 type OpfRootFile struct {
-	FullPath   string
-	MediaType  string
+	FullPath    string
+	MediaType   string
 	Identifiers []Identifier
-	Metadata   Metadata
-	Manifest   Manifest
+	Metadata    Metadata
+	Manifest    Manifest
 }
 
 type Opf struct {
