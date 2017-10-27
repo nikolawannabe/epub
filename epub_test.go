@@ -11,7 +11,6 @@ func TestFillTemplate(t *testing.T) {
 	var opf Opf
 	var chapters []Chapter
 	epub.Build("hello", opf, chapters)
-	assert.True(t, false)
 }
 
 func TestGetMetadata(t *testing.T) {

@@ -16,11 +16,11 @@ import (
 const (
 	mimeTypeFileName = "mimetype"
 	// mimetype is the required mime type of an epub file
-	mimetype         = "application/epub+zip"
+	mimetype = "application/epub+zip"
 
 	// TODO: these files should be distributed as part of the binary, probably.
 	// templateGlob is the location of the epub xml templates on your file system.
-	templateGlob     = "/home/ctalbot/src/lugod/src/github.com/nikolawannabe/epub/templates/*.tpl"
+	templateGlob = "./templates/*.tpl"
 )
 
 // EpubArchive contains the necessary structs to generate an epub
@@ -106,6 +106,7 @@ func (w *EpubArchive) Build(title string, opf Opf, chapters []Chapter) ([]byte, 
 		Properties: []string{"nav"},
 	}
 
+	opf.RootFiles = append(opf.RootFiles, OpfRootFile{})
 	opf.RootFiles[0].Manifest.ManifestItems = append(opf.RootFiles[0].Manifest.ManifestItems,
 		tocManifest)
 
